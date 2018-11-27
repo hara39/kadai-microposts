@@ -1,0 +1,24 @@
+@extends('layouts.app')
+
+@section('content')
+    <div class="row">
+        <aside class="col-xs-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">{{ $user->name }}</h3>
+                </div>
+                <div class="panel-body">
+                    <img class="media-object img-rounded img-responsive" src="{{ Gravatar::src($user->mail,500) }}" alt="">
+                </div>
+            </div>
+        </aside>
+        <div class="col-xs-8">
+            <ul class="nav nav-tads nav-justified">
+                <li><a href="#">TimeLine</a></li>
+                <li><a href="#">Following</a></li>
+                <li><a href="#">Followers</a></li>
+            </ul>
+        </div>
+    </div>
+
+@endsection
