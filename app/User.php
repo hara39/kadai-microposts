@@ -9,6 +9,11 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+     public function microposts()
+     {
+         return $this->hasMany(Micropost::class);
+     }
+
     /**
      * The attributes that are mass assignable.
      *

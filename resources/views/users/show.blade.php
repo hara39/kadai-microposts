@@ -10,14 +10,26 @@
                 <div class="panel-body">
                     <img class="media-object img-rounded img-responsive" src="{{ Gravatar::src($user->mail,500) }}" alt="">
                 </div>
+               
             </div>
         </aside>
         <div class="col-xs-8">
-            <ul class="nav nav-tads nav-justified">
-                <li><a href="#">TimeLine</a></li>
+            <ul class="nav nav-tabs nav-justified">
+                <li role="presentation" class="{{ Request::is('users/' . $user->id) ? 'active' : '' }}"><a href="{{ route('users.show', ['id' => $user->id]) }}">Timeline<span class="badge">{{ $count_microposts }}</span></a></li>
                 <li><a href="#">Following</a></li>
                 <li><a href="#">Followers</a></li>
             </ul>
+            @if (Auth::id() == $user->id)
+                {!! Form::open(['route' => 'microposts.store']) !!}
+                    <div class="form-group">
+                        {!! Form::textarea('content', old('content'), ['class' => 'form-control', 'rows' => '2']) !!}
+                        {!! Form::submit('Post', ['class' => 'btn btn-primary btn-block']) !!}
+                    </div>
+                {!! Form::close() !!}
+            @endif
+            @if (count($microposts) > 0)
+                @include('microposts.microposts', ['microposts' => $microposts])
+            @endif
         </div>
     </div>
 

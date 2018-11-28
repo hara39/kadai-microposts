@@ -9,7 +9,7 @@
             <div>
                 {{ $user->name }}
             </div>
-            <div>{!! link_to_route('users.show', 'View profile', ['id' => $user-id]) !!}</div>
+            <div>{!! link_to_route('users.show', 'View profile', ['id' => $user->id]) !!}</div>
         </div>
     </li>
     @endforeach
