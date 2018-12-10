@@ -19,11 +19,20 @@ class MicropostsController extends Controller
                 'user' => $user,
                 'microposts' => $microposts,
             ];
+        }    
+            return view('welcome', $data);
+        
+    }
+
+
+/*
             $data += $this->counts($user);
             return view('users.show', $data);
-        }else {
+        }
+        else {
             return view('welcome');
         }
+*/        
 /*
         $data = [];
         if (\Auth::check()) {
@@ -42,7 +51,7 @@ class MicropostsController extends Controller
         }
 */
 
-    }
+    
     
     public function store(Request $request)
     {
