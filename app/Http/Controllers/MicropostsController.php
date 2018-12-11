@@ -13,26 +13,20 @@ class MicropostsController extends Controller
         $data = [];
         if (\Auth::check()) {
             $user = \Auth::user();
-            $microposts = $user->microposts()->orderBy('created_at', 'desc')->paginate(10);
+            $microposts = $user->feed_microposts()->orderBy('created_at', 'desc')->paginate(10);
 
             $data = [
                 'user' => $user,
                 'microposts' => $microposts,
             ];
-        }    
-            return view('welcome', $data);
-        
-    }
-
-
-/*
+            
             $data += $this->counts($user);
             return view('users.show', $data);
         }
         else {
             return view('welcome');
         }
-*/        
+    }
 /*
         $data = [];
         if (\Auth::check()) {
@@ -59,12 +53,16 @@ class MicropostsController extends Controller
             'content' => 'required|max:191',
             ]);
             
+            $request->user()->microposts()->create([
+                'content' => $request->content,
+                ]);
+            
             return redirect()->back();
     }
     
-    public function destoroy($id)
+    public function destroy($id)
     {
-        $microposts = \App\Micropost::find($id);
+        $micropost = \App\Micropost::find($id);
         
         if (\Auth::id() === $micropost->user_id) {
             $micropost->delete();
