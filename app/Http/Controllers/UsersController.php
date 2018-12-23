@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\User;
-use App\microposts;
+
+use App\Micropost;
 
 class UsersController extends Controller
 {
@@ -48,7 +49,7 @@ class UsersController extends Controller
     }
     public function show($id)
     {
-        $user =User::find($id);
+        $user = User::find($id);
         $microposts = $user->microposts()->orderBy('created_at', 'desc')->paginate(10);
     
         $data = [
@@ -59,5 +60,22 @@ class UsersController extends Controller
         $data += $this->counts($user);
         
         return view('users.show', $data);
+    }
+    
+    public function favoritelist($id)
+    {
+        $data = [];
+        if (\Auth::check()) {
+            $user = \Auth::user();
+            $microposts = $user->feed_favorites()->orderBy('created_at', 'desc')->paginate(10);
+            
+            $data = [
+                'user' => $user,
+                'microposts' => $microposts,
+                ];
+                
+            $data += $this->counts($user);
+            return view('users.favoritelist', $data);
+        }
     }
 }
