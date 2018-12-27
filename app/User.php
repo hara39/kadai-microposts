@@ -98,24 +98,21 @@ class User extends Authenticatable
     {   
         $exist = $this->is_favorite($micropostId);
         
-        $its_me = $this->id == $micropostId;
-    
-        if ($exist || $its_me) {
+        if ($exist) {
         
             return false;
         }
         else {
             $this->favorites()->attach($micropostId);
             return true;
+            
         }
     }
     public function unfavorite($micropostId)
     {
         $exist = $this->is_favorite($micropostId);
         
-        $its_me = $this->id == $micropostId;
-    
-        if ($exist &&! $its_me) {
+        if ($exist) {
             $this->favorites()->detach($micropostId);
             return true;
         }
@@ -131,6 +128,7 @@ class User extends Authenticatable
     public function feed_favorites()
     {
         $favorite_micropost_ids = $this->favorites()-> pluck('microposts.id')->toArray();
+        $favorite_micropost_ids[] = $this->id;
         
         return Micropost::whereIn('id', $favorite_micropost_ids);
     }

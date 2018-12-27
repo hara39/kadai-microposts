@@ -24,7 +24,7 @@ class MicropostsController extends Controller
             return view('users.show', $data);
         }
         else {
-            return view('welcome');
+            return view('user.show');
         }
     }
 /*
